@@ -8,28 +8,24 @@ class Triangle
     @side3 = side3
   end
 
-  def equilateral
+  def equilateral?
     side1 == side2 && side2 == side3
   end
 
-  def isosceles
+  def isosceles?
     [side1, side2, side3].uniq.length == 2
   end
 
-  def scalene
-    if equilateral || isosceles
-      true
-    else
-      false
-    end
+  def scalene?
+    equilateral? || isosceles?
   end
 
   def recite_facts
-    puts 'This triangle is equilateral!' if equilateral
-    if isosceles
+    puts 'This triangle is equilateral!' if equilateral?
+    if isosceles?
       puts 'This triangle is isosceles! Also, that word is hard to type.'
     end
-    puts 'This triangle is scalene and mathematically boring.' if scalene
+    puts 'This triangle is scalene and mathematically boring.' if scalene?
     recite_facts_based_on_angles
   end
 
@@ -40,32 +36,32 @@ class Triangle
     puts ''
   end
 
-  def calculate_angles(a, b, c)
-    angle_a = calculate_angle_a(a, b, c)
-    angle_b = calculate_angle_b(a, b, c)
-    angle_c = calculate_angle_a(a, b, c)
+  def calculate_angles(x, z, y)
+    angle_a = calculate_angle_a(x, y, z)
+    angle_b = calculate_angle_b(x, y, z)
+    angle_c = calculate_angle_c(x, y, z)
 
     [angle_a, angle_b, angle_c]
   end
 
-  def calculate_angle_a(a, b, c)
-    radians_to_degrees(Math.acos((b**2 + c**2 - a**2) / (2.0 * b * c)))
+  def calculate_angle_a(x, y, z)
+    radians_to_degrees(Math.acos((y**2 + z**2 - x**2) / (2.0 * y * z)))
   end
 
-  def calculate_angle_b(a, b, c)
-    radians_to_degrees(Math.acos((a**2 + c**2 - b**2) / (2.0 * a * c)))
+  def calculate_angle_b(x, y, z)
+    radians_to_degrees(Math.acos((x**2 + y**2 - z**2) / (2.0 * x * y)))
   end
 
-  def calculate_angle_c(a, b, c)
-    radians_to_degrees(Math.acos((a**2 + b**2 - c**2) / (2.0 * a * b)))
+  def calculate_angle_c(x, y, z)
+    radians_to_degrees(Math.acos((x**2 + z**2 - y**2) / (2.0 * x * z)))
   end
 
   def radians_to_degrees(rads)
-    (rads * 180 / Math::PI).round
+    (rads * 180.0 / Math::PI).round(3)
   end
 end
 
-triangles = [[5, 5, 5], [5, 12, 13]]
+triangles = [[5, 5, 5], [5, 12, 13], [2.6, 2.5, 3]]
 
 triangles.each do |sides|
   tri = Triangle.new(*sides)
